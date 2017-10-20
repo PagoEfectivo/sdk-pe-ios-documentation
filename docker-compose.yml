@@ -1,10 +1,8 @@
 version: "2"
 services:
-  live:
+  mkdocs:
      image: squidfunk/mkdocs-material
      ports:
        - "8000:8000"
      volumes:
        - "./:/docs"
-        
-
