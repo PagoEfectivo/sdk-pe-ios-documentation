@@ -3,8 +3,13 @@ theme: 'material'
 markdown_extensions:
   - codehilite
   - admonition
+
 #todo:
 #  - markdown_fenced_code_tabs:
 #   single_block_as_tab: True
+
 extra:
+  palette:
+    primary: 'Amber'
+    accent: 'Orange'
   version: 1.0
