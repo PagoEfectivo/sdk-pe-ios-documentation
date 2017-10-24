@@ -28,22 +28,21 @@ Vía consola ubícarse a la carpeta del proyecto, donde se encuentra el archivo 
 
 **Paso 2:**
 Una vez ubicado en la carpeta del proyecto, ejecutar el siguiente comando:
-``` 
-#!bash
+
+```bash
 $ pod init
 ``` 
 
 **Paso 3:**
-Agrega la siguiente línea de código al archivo **Podfile**
+Agrega la siguiente línea de código al archivo **Podfile**:
 ``` 
 #!ruby
-pod "xxxxx"
+pod "PagoEfectivoSDK"
 ```
 
 **Paso 5:**
 Instala el pod y abre el archivo de extensión **.xworkspace**:
-``` 
-#!bash
+```bash
 $ pod install
 $ open yourProject.xworkspace
 ```
@@ -70,25 +69,53 @@ Para ello debes tener los valores antes de empezar:
 !!! info
     Si aún no tienes los key's correspondientes favor de comunicarte [aquí](mailto:elcomercio.mobile@gmail.com)
 
-Inicializar la librería de pago efectivo es muy simple, sólo necesitas seguir los siguientes pasos:
+#### En Objective-C
+Para inicializar y hacer uso de los métodos del SDK de PagoEfectivo bajo un proyecto en **Objective-C**, debes seguir los siguientes pasos:
 
-1. Importa el módulo de PagoEfectivoSDK en el archivo **AppDelegate.m** de tu aplicación
-
-En Objective-C:
+**Paso 1:**
+Importa el módulo de PagoEfectivoSDK en el archivo **AppDelegate.m** de la aplicación:
 
 ```
 #!obj-c
 #import <PagoEfectivoSDK/PagoEfectivoSDK.h>
 ```
 
-2. Luego de haberlo importado, se debe agregar el siguiente código en el método **application**
+**Paso 2:**
+Luego de haberlo importado, se debe agregar el siguiente código en el método **application** que se encuentra en el archivo **AppDelegate.m**:
 
-En Objective-C:
 ```
 #!obj-c
-[PagoEfectivoSDK config: MY_SERVICE_ID
-                  accessKey: MY_ACCESS_KEY
+[PagoEfectivoSDK config: @"MY_SECRET_KEY"
+                  accessKey: @"MY_ACCESS_KEY"
                   serviceId: MY_SERVICE_ID ];
+```
+
+#### En Swift 3.x ó 4.x
+
+Crear el archivo **_MyProject_-Brigding-Header.h**, y establecer la ruta del archivo creado en la directiva **Objective-C Bridging Header** que se encuentra en la sección **Build Settings** en el _target_ principal del proyecto.
+
+**Paso 1:**
+En el archivo **_MyProject_-Brigding-Header.h** agregar lo siguiente:
+
+```
+#!obj-c
+#import <PagoEfectivoSDK/PagoEfectivoSDK.h>
+#import <PagoEfectivoSDK/Cip.h>
+```
+
+**Paso 2:**
+En el archivo **AppDelegate.swift** agregar lo siguiente:
+```
+#!swift
+import PagoEfectivoSDK
+```
+
+**Paso 3:**
+Luego de haberlo importado, se debe agregar el siguiente código en el método **application** que se encuentra en el archivo **AppDelegate.swift**:
+
+```
+#!swift
+PagoEfectivoSDK.config("MY_SECRET_KEY", accessKey: "MY_ACCESS_KEY", serviceId: MY_SERVICE_ID)
 ```
 
 ## **Uso de Pago Efectivo SDK | CIP's functions**
