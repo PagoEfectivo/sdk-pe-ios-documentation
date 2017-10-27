@@ -1,0 +1,109 @@
+{
+    "docs": [
+        {
+            "location": "/", 
+            "text": "PagoEfectivo SDK para iOS\n\n\n\n\n\n\nOverview\n\n\n\n\nPagoEfectivoSDK\n le permitir\u00e1 implementar de forma r\u00e1pida y sencilla las funcionalidades que ofrece para realizar transacciones online a trav\u00e9s de la plataforma de PagoEfectivo para iOS.\n\n\nEn el siguiente manual encontrar\u00e1 todo lo necesario para poder realizar la implementaci\u00f3n del SDK, as\u00ed como la forma correcta de implementar sus principales funciones tales como \nGenerar un CIP\n y \nListar CIPs\n.\n\n\nPre requisitos\n\n\n\n\n\n\nXcode 8+\n\n\niOS 10+\n\n\n\n\nInstalaci\u00f3n\n\n\n\n\nEs recomendable usar \nCocoaPods\n para instalar el SDK:\n\n\nV\u00eda CocoaPods\n\n\nEs necesario tener instalado el gestor de paqueter\u00eda, para ello debes ir a  \nla p\u00e1gina web de cocoapods\n, instalar CocoaPods y luego puedes continuar con los siguientes pasos.\n\n\nPaso 1:\n\nV\u00eda terminal, ubicarse en la carpeta del proyecto, donde se encuentra el archivo de extensi\u00f3n \n.xcodeproj\n\n\nPaso 2:\n\nUna vez ubicado en la carpeta del proyecto, ejecutar el siguiente comando:\n\n\n$ pod init\n\n\n\n\n\nPaso 3:\n\nAgrega la siguiente l\u00ednea de c\u00f3digo al archivo \nPodfile\n:\n\n\n1\npod\n \nPagoEfectivoSDK\n\n\n\n\n\n\n\nPaso 5:\n\nInstala el pod y abre el archivo de extensi\u00f3n \n.xcworkspace\n:\n\n\n$ pod install\n$ open yourProject.xcworkspace\n\n\n\n\n\nV\u00eda manual\n\n\nPaso 1:\n\nDescargar el archivo \nPagoEfectivoSDK.framework\n\n\nPaso 2:\n\nAbrir tu proyecto con Xcode y agregar el archivo a las secciones \nEmbedded Binaries\n en el target principal de tu proyecto\n\n\nAqu\u00ed te dejamos un ejemplo de c\u00f3mo debe agregarse de forma manual:\n\n\n\nConfiguraci\u00f3n\n\n\n\n\nPara poder hacer uso del SDK es necesario configurar nuestro proyecto seg\u00fan el lenguaje.\nA continuaci\u00f3n te mostramos como hacerlo con Objective-C o Swift:\n\n\nObjective-C\n\n\nPara hacer uso de los m\u00e9todos del SDK de PagoEfectivo bajo un proyecto en \nObjective-C\n, \ndebes importar el m\u00f3dulo de PagoEfectivoSDK en el archivo \nAppDelegate.m\n del proyecto:\n\n\n1\n#import \nPagoEfectivoSDK/PagoEfectivoSDK.h\n\n\n\n\n\n\n\nSwift\n\n\nCrear el archivo \nMyProject\n-Brigding-Header.h\n, y establecer la ruta de este archivo en la directiva \nObjective-C Bridging Header\n que se encuentra en la secci\u00f3n \nBuild Settings\n en el \ntarget\n principal del proyecto.\n\n\nPaso 1:\n\nEn el archivo \nMyProject\n-Brigding-Header.h\n agregar lo siguiente:\n\n\n1\n#import \nPagoEfectivoSDK/PagoEfectivoSDK.h\n\n\n\n\n\n\n\nPaso 2:\n\nEn el archivo \nAppDelegate.swift\n agregar lo siguiente:\n\n\n1\nimport\n \nPagoEfectivoSDK\n\n\n\n\n\n\n\nInicializaci\u00f3n\n\n\n\n\nPara poder hacer uso de las funciones que ofrece el SDK, es necesario inicializar la librer\u00eda. \nPara ello debes tener estos valores previamente:\n\n\n\n\nService Id\n\n\nAccess Key\n\n\nSecret Key\n\n\n\n\n\n\nInfo\n\n\nSi a\u00fan no tienes los valores correspondientes favor de comunicarte \naqu\u00ed\n.\n\n\n\n\nObjective-C\n\n\nSe debe agregar el siguiente c\u00f3digo  en el m\u00e9todo \napplication\n que se encuentra en el archivo \nAppDelegate.m\n:\n\n\n1\n2\n3\n[\nPagoEfectivoSDK\n \nconfig\n:\n \n@\nMY_SECRET_KEY\n\n                  \naccessKey\n:\n \n@\nMY_ACCESS_KEY\n\n                  \nserviceId\n:\n \nMY_SERVICE_ID\n \n];\n\n\n\n\n\n\n\nSwift\n\n\nSe debe agregar el siguiente c\u00f3digo en el m\u00e9todo \napplication\n que se encuentra en el archivo \nAppDelegate.swift\n:\n\n\n1\n2\n3\nPagoEfectivoSDK\n.\nconfig\n(\nMY_SECRET_KEY\n,\n \n    \naccessKey\n:\n \nMY_ACCESS_KEY\n,\n \n    \nserviceId\n:\n \nMY_SERVICE_ID\n)\n\n\n\n\n\n\n\nFuncionalidades del SDK\n\n\n\n\nEl SDK provee las siguientes funcionalidades:\n\n\nGeneraci\u00f3n de CIP\n\n\n\n\nObjective-C\n\n\n 1\n 2\n 3\n 4\n 5\n 6\n 7\n 8\n 9\n10\n11\n12\n13\n14\n15\n16\n17\n18\n19\n20\n21\n22\n23\n24\n25\n26\n27\n28\n29\n30\n31\n32\n//Creamos una nueva instancia de tipo CipRequest\n\n\nCipRequest\n \n*\nrequest\n \n=\n \n[\nCipRequest\n \nalloc\n];\n\n\n\n//Se establecen las propiedades  requeridas\n\n\n[\nrequest\n \nsetAmount\n:\n100.05\n];\n\n\n[\nrequest\n \nsetCurrency\n:\n \nUSD\n];\n\n\n[\nrequest\n \nsetTransactionCode\n:\n@\n101\n];\n\n\n[\nrequest\n \nsetUserEmail\n:\n@\njhon@doe.com\n];\n\n\n\n//Opcionales\n\n\n[\nrequest\n \nsetAdminEmail\n:\n@\nfoo@bar.com\n];\n\n\n[\nrequest\n \nsetDateExpiry\n:\n@\n2000-01-31T05:40:00-05:00\n];\n \n//Debe ingresarse en formato UTC\n\n\n[\nrequest\n \nsetPaymentConcept\n:\n@\nPago en tienda\n];\n \n//El concepto de pago\n\n\n[\nrequest\n \nsetAdditionalData\n:\n@\nSe realiz\u00f3 un pago ... \n];\n \n//Data adicional\n\n\n[\nrequest\n \nsetUserName\n:\n@\njhon\n];\n\n\n[\nrequest\n \nsetUserLastName\n:\n@\ndoe\n];\n\n\n[\nrequest\n \nsetUserUbigeo\n:\n@\n010101\n];\n \n//Formato\n\n\n[\nrequest\n \nsetUserCountry\n:\n@\nPERU\n];\n\n\n[\nrequest\n \nsetUserDocumentType\n:\n \n.\nDNI\n];\n \n//El SDK provee una colecci\u00f3n de tipos de documentType\n\n\n[\nrequest\n \nsetUserDocumentNumber\n:\n@\n00000000\n];\n \n//Por ejemplo el formato de DNI\n\n\n[\nrequest\n \nsetUserPhone\n:\n@\n999999999\n];\n\n\n[\nrequest\n \nsetUserCodeCountry\n:\n@\n+51\n];\n\n\n\n//Creamos una variable que almacene nuestra funci\u00f3n que ir\u00e1 de callback para el servicio\n\n\nserviceCallback\n \n__block\n \ncallbackResponse\n \n=\n \n^\n(\nlong\n \nstatus\n,\n \nid\n \nreceivedData\n,\n \nNSError\n \n*\nerror\n){\n\n        \n//C\u00f3digo para tratar con la respuesta\n\n\n};\n\n\n\n//Usamos la funci\u00f3n de generaci\u00f3n de CIP del SDK\n\n\n[[\nPagoEfectivoSDK\n \nCip\n]\n \ngenerate\n:\nEN\n \n                  \nrequestObject\n:\ninstanceRequest\n \n                \nresponseHandler\n:\ncallbackResponse\n];\n\n\n\n\n\n\n\nSwift\n\n\n 1\n 2\n 3\n 4\n 5\n 6\n 7\n 8\n 9\n10\n11\n12\n13\n14\n15\n16\n17\n18\n19\n20\n21\n22\n23\n24\n25\n26\n27\n//creamos una nueva instancia de tipo CipRequest\n\n\nlet\n \nrequest\n \n=\n \nCipRequest\n()\n\n\nrequest\n.\namount\n \n=\n \n100.05\n\n\nrequest\n.\ncurrency\n \n=\n \n.\nPEN\n\n\nrequest\n.\ntransactionCode\n \n=\n \n101\n\n\nrequest\n.\nuserEmail\n \n=\n \njhon@doe.com\n\n\n\n//Opcionales\n\n\nrequest\n.\nadminEmail\n \n=\n \nfoo@bar.com\n\n\nrequest\n.\ndateExpiry\n \n=\n \n2000-01-31T05:40:00-05:00\n \n//Debe ingresarse en formato UTC\n\n\nrequest\n.\npaymentConcept\n \n=\n \nPago en tienda\n \n//El concepto de pago\n\n\nrequest\n.\nadditionalData\n \n=\n \nSe realiz\u00f3 un pago ... \n \n//Data adicional\n\n\nrequest\n.\nuserName\n \n=\n \njhon\n\n\nrequest\n.\nuserLastName\n \n=\n \ndoe\n\n\nrequest\n.\nuserUbigeo\n \n=\n \n010101\n \n//Formato\n\n\nrequest\n.\nuserCountry\n \n=\n \nPERU\n\n\nrequest\n.\nuserDocumentType\n \n=\n \n.\nDNI\n \n//El SDK provee una colecci\u00f3n de tipos de documentType\n\n\nrequest\n.\nuserDocumentNumber\n \n=\n \n00000000\n \n//Por ejemplo el formato de DNI\n\n\nrequest\n.\nuserPhone\n \n=\n \n999999999\n\n\nrequest\n.\nuserCodeCountry\n \n=\n \n+51\n\n\n\n// Usamos la funci\u00f3n de generaci\u00f3n de CIP del SDK\n\n\nPagoEfectivoSDK\n.\ncip\n().\ngenerate\n(.\nEN\n,\n \n    \nrequestObject\n:\n \nrequest\n,\n\n    \nresponseHandler\n:\n \n{\n \n(\nstatus\n,\n \nresult\n,\n \nerror\n)\n \nin\n\n        \n//C\u00f3digo para tratar con la respuesta del servicio\n\n\n})\n\n\n\n\n\n\n\nConsultar CIP(s)\n\n\n\n\nObjective-C\n\n\n1\n2\n3\n4\n5\n6\n7\n8\n//Definimos un arreglo\n\n\nNSArray\n \n*\ncips\n \n=\n \n@[\n@\n2495383\n,\n@\n50\n,\n@\n10\n]\n;\n\n\n\n//Usamos la funci\u00f3n de b\u00fasqueda de CIPs del SDK\n\n\n[[\nPagoEfectivoSDK\n \nCip\n]\n \nsearch\n:\ncips\n \n              \nresponseHandler\n:\n^\n(\nlong\n \nstatus\n,\n \nNSMutableArray\n \n*\ncipSearchArray\n,\n \nNSError\n \n*\nerror\n)\n \n{\n\n     \n//C\u00f3digo para tratar con la respuesta del servicio\n\n\n}];\n\n\n\n\n\n\n\nSwift\n\n\n1\n2\n3\n4\n5\n6\n7\n8\n//Definimos un arreglo\n\n\nlet\n \ncips\n:[\nString\n]\n \n=\n \n[\n2495383\n,\n \n50\n,\n \n10\n];\n\n\n\n//Usamos la funci\u00f3n de b\u00fasqueda de CIPs del SDK\n\n\nPagoEfectivoSDK\n.\ncip\n().\nsearch\n(\ncips\n,\n \n    \nresponseHandler\n:\n \n{\n \n(\nstatus\n,\n \nresul\n,\n \nerror\n)\n \nin\n\n        \n//C\u00f3digo para tratar con la respuesta del servicio\n\n\n})\n\n\n\n\n\n\n\n\n\nInfo\n\n\nLa documentaci\u00f3n de c\u00f3digo\n esta disponible para revisar a m\u00e1s detalle las funciones presentadas en esta documentaci\u00f3n.\n\n\n\n\nFeedback\n\n\n\n\nEn caso existan dudas, consultas o mejoras en la gu\u00eda, favor de escribir al \ncorreo de feedback\n\ncon el asunto \nDocumentaci\u00f3n PagoEfectivoSDK.", 
+            "title": "Home"
+        }, 
+        {
+            "location": "/#pagoefectivo-sdk-para-ios", 
+            "text": "", 
+            "title": "PagoEfectivo SDK para iOS"
+        }, 
+        {
+            "location": "/#overview", 
+            "text": "PagoEfectivoSDK  le permitir\u00e1 implementar de forma r\u00e1pida y sencilla las funcionalidades que ofrece para realizar transacciones online a trav\u00e9s de la plataforma de PagoEfectivo para iOS.  En el siguiente manual encontrar\u00e1 todo lo necesario para poder realizar la implementaci\u00f3n del SDK, as\u00ed como la forma correcta de implementar sus principales funciones tales como  Generar un CIP  y  Listar CIPs .", 
+            "title": "Overview"
+        }, 
+        {
+            "location": "/#pre-requisitos", 
+            "text": "Xcode 8+  iOS 10+", 
+            "title": "Pre requisitos"
+        }, 
+        {
+            "location": "/#instalacion", 
+            "text": "Es recomendable usar  CocoaPods  para instalar el SDK:", 
+            "title": "Instalaci\u00f3n"
+        }, 
+        {
+            "location": "/#via-cocoapods", 
+            "text": "Es necesario tener instalado el gestor de paqueter\u00eda, para ello debes ir a   la p\u00e1gina web de cocoapods , instalar CocoaPods y luego puedes continuar con los siguientes pasos.  Paso 1: \nV\u00eda terminal, ubicarse en la carpeta del proyecto, donde se encuentra el archivo de extensi\u00f3n  .xcodeproj  Paso 2: \nUna vez ubicado en la carpeta del proyecto, ejecutar el siguiente comando:  $ pod init  Paso 3: \nAgrega la siguiente l\u00ednea de c\u00f3digo al archivo  Podfile :  1 pod   PagoEfectivoSDK    Paso 5: \nInstala el pod y abre el archivo de extensi\u00f3n  .xcworkspace :  $ pod install\n$ open yourProject.xcworkspace", 
+            "title": "V\u00eda CocoaPods"
+        }, 
+        {
+            "location": "/#via-manual", 
+            "text": "Paso 1: \nDescargar el archivo  PagoEfectivoSDK.framework  Paso 2: \nAbrir tu proyecto con Xcode y agregar el archivo a las secciones  Embedded Binaries  en el target principal de tu proyecto  Aqu\u00ed te dejamos un ejemplo de c\u00f3mo debe agregarse de forma manual:", 
+            "title": "V\u00eda manual"
+        }, 
+        {
+            "location": "/#configuracion", 
+            "text": "Para poder hacer uso del SDK es necesario configurar nuestro proyecto seg\u00fan el lenguaje.\nA continuaci\u00f3n te mostramos como hacerlo con Objective-C o Swift:", 
+            "title": "Configuraci\u00f3n"
+        }, 
+        {
+            "location": "/#objective-c", 
+            "text": "Para hacer uso de los m\u00e9todos del SDK de PagoEfectivo bajo un proyecto en  Objective-C , \ndebes importar el m\u00f3dulo de PagoEfectivoSDK en el archivo  AppDelegate.m  del proyecto:  1 #import  PagoEfectivoSDK/PagoEfectivoSDK.h", 
+            "title": "Objective-C"
+        }, 
+        {
+            "location": "/#swift", 
+            "text": "Crear el archivo  MyProject -Brigding-Header.h , y establecer la ruta de este archivo en la directiva  Objective-C Bridging Header  que se encuentra en la secci\u00f3n  Build Settings  en el  target  principal del proyecto.  Paso 1: \nEn el archivo  MyProject -Brigding-Header.h  agregar lo siguiente:  1 #import  PagoEfectivoSDK/PagoEfectivoSDK.h    Paso 2: \nEn el archivo  AppDelegate.swift  agregar lo siguiente:  1 import   PagoEfectivoSDK", 
+            "title": "Swift"
+        }, 
+        {
+            "location": "/#inicializacion", 
+            "text": "Para poder hacer uso de las funciones que ofrece el SDK, es necesario inicializar la librer\u00eda. \nPara ello debes tener estos valores previamente:   Service Id  Access Key  Secret Key    Info  Si a\u00fan no tienes los valores correspondientes favor de comunicarte  aqu\u00ed .", 
+            "title": "Inicializaci\u00f3n"
+        }, 
+        {
+            "location": "/#objective-c_1", 
+            "text": "Se debe agregar el siguiente c\u00f3digo  en el m\u00e9todo  application  que se encuentra en el archivo  AppDelegate.m :  1\n2\n3 [ PagoEfectivoSDK   config :   @ MY_SECRET_KEY \n                   accessKey :   @ MY_ACCESS_KEY \n                   serviceId :   MY_SERVICE_ID   ];", 
+            "title": "Objective-C"
+        }, 
+        {
+            "location": "/#swift_1", 
+            "text": "Se debe agregar el siguiente c\u00f3digo en el m\u00e9todo  application  que se encuentra en el archivo  AppDelegate.swift :  1\n2\n3 PagoEfectivoSDK . config ( MY_SECRET_KEY ,  \n     accessKey :   MY_ACCESS_KEY ,  \n     serviceId :   MY_SERVICE_ID )", 
+            "title": "Swift"
+        }, 
+        {
+            "location": "/#funcionalidades-del-sdk", 
+            "text": "El SDK provee las siguientes funcionalidades:", 
+            "title": "Funcionalidades del SDK"
+        }, 
+        {
+            "location": "/#generacion-de-cip", 
+            "text": "", 
+            "title": "Generaci\u00f3n de CIP"
+        }, 
+        {
+            "location": "/#objective-c_2", 
+            "text": "1\n 2\n 3\n 4\n 5\n 6\n 7\n 8\n 9\n10\n11\n12\n13\n14\n15\n16\n17\n18\n19\n20\n21\n22\n23\n24\n25\n26\n27\n28\n29\n30\n31\n32 //Creamos una nueva instancia de tipo CipRequest  CipRequest   * request   =   [ CipRequest   alloc ];  //Se establecen las propiedades  requeridas  [ request   setAmount : 100.05 ];  [ request   setCurrency :   USD ];  [ request   setTransactionCode : @ 101 ];  [ request   setUserEmail : @ jhon@doe.com ];  //Opcionales  [ request   setAdminEmail : @ foo@bar.com ];  [ request   setDateExpiry : @ 2000-01-31T05:40:00-05:00 ];   //Debe ingresarse en formato UTC  [ request   setPaymentConcept : @ Pago en tienda ];   //El concepto de pago  [ request   setAdditionalData : @ Se realiz\u00f3 un pago ...  ];   //Data adicional  [ request   setUserName : @ jhon ];  [ request   setUserLastName : @ doe ];  [ request   setUserUbigeo : @ 010101 ];   //Formato  [ request   setUserCountry : @ PERU ];  [ request   setUserDocumentType :   . DNI ];   //El SDK provee una colecci\u00f3n de tipos de documentType  [ request   setUserDocumentNumber : @ 00000000 ];   //Por ejemplo el formato de DNI  [ request   setUserPhone : @ 999999999 ];  [ request   setUserCodeCountry : @ +51 ];  //Creamos una variable que almacene nuestra funci\u00f3n que ir\u00e1 de callback para el servicio  serviceCallback   __block   callbackResponse   =   ^ ( long   status ,   id   receivedData ,   NSError   * error ){ \n         //C\u00f3digo para tratar con la respuesta  };  //Usamos la funci\u00f3n de generaci\u00f3n de CIP del SDK  [[ PagoEfectivoSDK   Cip ]   generate : EN  \n                   requestObject : instanceRequest  \n                 responseHandler : callbackResponse ];", 
+            "title": "Objective-C"
+        }, 
+        {
+            "location": "/#swift_2", 
+            "text": "1\n 2\n 3\n 4\n 5\n 6\n 7\n 8\n 9\n10\n11\n12\n13\n14\n15\n16\n17\n18\n19\n20\n21\n22\n23\n24\n25\n26\n27 //creamos una nueva instancia de tipo CipRequest  let   request   =   CipRequest ()  request . amount   =   100.05  request . currency   =   . PEN  request . transactionCode   =   101  request . userEmail   =   jhon@doe.com  //Opcionales  request . adminEmail   =   foo@bar.com  request . dateExpiry   =   2000-01-31T05:40:00-05:00   //Debe ingresarse en formato UTC  request . paymentConcept   =   Pago en tienda   //El concepto de pago  request . additionalData   =   Se realiz\u00f3 un pago ...    //Data adicional  request . userName   =   jhon  request . userLastName   =   doe  request . userUbigeo   =   010101   //Formato  request . userCountry   =   PERU  request . userDocumentType   =   . DNI   //El SDK provee una colecci\u00f3n de tipos de documentType  request . userDocumentNumber   =   00000000   //Por ejemplo el formato de DNI  request . userPhone   =   999999999  request . userCodeCountry   =   +51  // Usamos la funci\u00f3n de generaci\u00f3n de CIP del SDK  PagoEfectivoSDK . cip (). generate (. EN ,  \n     requestObject :   request , \n     responseHandler :   {   ( status ,   result ,   error )   in \n         //C\u00f3digo para tratar con la respuesta del servicio  })", 
+            "title": "Swift"
+        }, 
+        {
+            "location": "/#consultar-cips", 
+            "text": "", 
+            "title": "Consultar CIP(s)"
+        }, 
+        {
+            "location": "/#objective-c_3", 
+            "text": "1\n2\n3\n4\n5\n6\n7\n8 //Definimos un arreglo  NSArray   * cips   =   @[ @ 2495383 , @ 50 , @ 10 ] ;  //Usamos la funci\u00f3n de b\u00fasqueda de CIPs del SDK  [[ PagoEfectivoSDK   Cip ]   search : cips  \n               responseHandler : ^ ( long   status ,   NSMutableArray   * cipSearchArray ,   NSError   * error )   { \n      //C\u00f3digo para tratar con la respuesta del servicio  }];", 
+            "title": "Objective-C"
+        }, 
+        {
+            "location": "/#swift_3", 
+            "text": "1\n2\n3\n4\n5\n6\n7\n8 //Definimos un arreglo  let   cips :[ String ]   =   [ 2495383 ,   50 ,   10 ];  //Usamos la funci\u00f3n de b\u00fasqueda de CIPs del SDK  PagoEfectivoSDK . cip (). search ( cips ,  \n     responseHandler :   {   ( status ,   resul ,   error )   in \n         //C\u00f3digo para tratar con la respuesta del servicio  })     Info  La documentaci\u00f3n de c\u00f3digo  esta disponible para revisar a m\u00e1s detalle las funciones presentadas en esta documentaci\u00f3n.", 
+            "title": "Swift"
+        }, 
+        {
+            "location": "/#feedback", 
+            "text": "En caso existan dudas, consultas o mejoras en la gu\u00eda, favor de escribir al  correo de feedback \ncon el asunto  Documentaci\u00f3n PagoEfectivoSDK.", 
+            "title": "Feedback"
+        }
+    ]
+}
